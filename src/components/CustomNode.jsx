@@ -20,7 +20,7 @@ const SourceNode = ({ data }) => {
 
 const DestinationNode = ({ data }) => {
   return (
-    <div className="p-1 bg-blue-200 border-2 border-blue-500 rounded">
+    <div className="p-1 bg-blue-200 border-2 border-blue-500 rounded relative">
       <div className="flex felx-row items-center gap-5">
         <div className="text-large font-semibold">{data.label}</div>
         <div>

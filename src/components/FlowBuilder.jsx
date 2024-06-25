@@ -5,10 +5,10 @@ import ReactFlow, {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  MiniMap, 
+  MiniMap,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { SourceNode, DestinationNode } from './CustomNode';
+import { SourceNode, DestinationNode } from "./";
 
 const nodeTypes = {
   source: SourceNode,
@@ -37,7 +37,15 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-  { id: "1-2", source: "1", target: "2" },
+  {
+    id: "1-3",
+    source: "1",
+    target: "3",
+    animated: true,
+    markerEnd: {
+      type: "arrowclosed",
+    },
+  },
 ];
 
 const FlowBuilder = () => {
@@ -55,50 +63,57 @@ const FlowBuilder = () => {
     []
   );
 
-  const onEdgeClick = useCallback(
-    (event, edge) => {
-      event.stopPropagation();
-      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
-    },
-    []
-  );
+  const onEdgeClick = useCallback((event, edge) => {
+    event.stopPropagation();
+    setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+  }, []);
 
   const onConnect = useCallback(
-    (params) => {
-      // const sourceNode = nodes.find((node) => node.id === params.source);
-      // const targetNode = nodes.find((node) => node.id === params.target);
-
-      // if (sourceNode.type !== targetNode.type) {
-        setEdges((eds) => addEdge(params, eds));
-      // } else {
-      //   alert("Cannot connect two sources or two destinations");
-      // }
-    },
+    (params) =>
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            animated: true,
+            markerEnd: {
+              type: "arrowclosed",
+            },
+          },
+          eds
+        )
+      ),
     [nodes]
   );
 
   const addNode = (type) => {
-    const existingNodesOfType = nodes.filter(node => node.type === type);
-    const yOffset = existingNodesOfType.length; 
+    const existingNodesOfType = nodes.filter((node) => node.type === type);
+    const yOffset = existingNodesOfType.length;
     const newNode = {
       id: nodeId.toString(),
-      position: { x: type === 'source' ? 100 : 1000, y: type==="source" ? yOffset*100 : (yOffset *80) + 50 },
-      data: { label: `${type.charAt(0).toUpperCase() + type.slice(1)} ${existingNodesOfType.length + 1}` },
-      type
+      position: {
+        x: type === "source" ? 100 : 1000,
+        y: type === "source" ? yOffset * 100 : yOffset * 80 + 50,
+      },
+      data: {
+        label: `${type.charAt(0).toUpperCase() + type.slice(1)} ${
+          existingNodesOfType.length + 1
+        }`,
+      },
+      type,
     };
     setNodes((nds) => [...nds, newNode]);
     setNodeId(nodeId + 1);
   };
 
   const nodeColor = (node) => {
-    if(node.type === "source") return "#48bb78";
+    if (node.type === "source") return "#48bb78";
     return "rgb(59 130 246)";
   };
 
   return (
     <div className="h-[85vh] w-[100vw] box-border">
       <div className="mt-3 text-center">
-      <h1 className="text-3xl mb-5 font-semibold">Pipleline Builder</h1>
+        <h1 className="text-3xl mb-5 font-semibold">Pipleline Builder</h1>
         <button
           onClick={() => addNode("source")}
           className="mr-10 px-4 py-2 bg-green-500 text-white rounded"
@@ -122,7 +137,7 @@ const FlowBuilder = () => {
         nodeTypes={nodeTypes}
         fitView
       >
-        <MiniMap nodeColor={nodeColor} zoomable pannable/>
+        <MiniMap nodeColor={nodeColor} zoomable pannable />
         <Background />
         <Controls />
       </ReactFlow>
