@@ -5,6 +5,7 @@ import ReactFlow, {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  MiniMap 
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { SourceNode, DestinationNode } from './CustomNode';
@@ -64,14 +65,14 @@ const FlowBuilder = () => {
 
   const onConnect = useCallback(
     (params) => {
-      const sourceNode = nodes.find((node) => node.id === params.source);
-      const targetNode = nodes.find((node) => node.id === params.target);
+      // const sourceNode = nodes.find((node) => node.id === params.source);
+      // const targetNode = nodes.find((node) => node.id === params.target);
 
-      if (sourceNode.type !== targetNode.type) {
+      // if (sourceNode.type !== targetNode.type) {
         setEdges((eds) => addEdge(params, eds));
-      } else {
-        alert("Cannot connect two sources or two destinations");
-      }
+      // } else {
+      //   alert("Cannot connect two sources or two destinations");
+      // }
     },
     [nodes]
   );
@@ -85,9 +86,13 @@ const FlowBuilder = () => {
       data: { label: `${type.charAt(0).toUpperCase() + type.slice(1)} ${existingNodesOfType.length + 1}` },
       type
     };
-
     setNodes((nds) => [...nds, newNode]);
     setNodeId(nodeId + 1);
+  };
+
+  const nodeColor = (node) => {
+    if(node.type === "source") return "#48bb78";
+    return "rgb(59 130 246)";
   };
 
   return (
@@ -117,6 +122,7 @@ const FlowBuilder = () => {
         nodeTypes={nodeTypes}
         fitView
       >
+        <MiniMap nodeColor={nodeColor} zoomable pannable/>
         <Background />
         <Controls />
       </ReactFlow>
