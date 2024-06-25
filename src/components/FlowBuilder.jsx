@@ -55,7 +55,7 @@ const FlowBuilder = () => {
     []
   );
 
-  const onEdgeDoubleClick = useCallback(
+  const onEdgeClick = useCallback(
     (event, edge) => {
       event.stopPropagation();
       setEdges((eds) => eds.filter((e) => e.id !== edge.id));
@@ -118,7 +118,7 @@ const FlowBuilder = () => {
         edges={edges}
         onConnect={onConnect}
         onEdgesChange={onEdgesChange}
-        onEdgeDoubleClick={onEdgeDoubleClick}
+        onEdgeClick={onEdgeClick}
         nodeTypes={nodeTypes}
         fitView
       >
