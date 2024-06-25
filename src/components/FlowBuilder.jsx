@@ -96,7 +96,7 @@ const FlowBuilder = () => {
   };
 
   return (
-    <div className="h-[80vh] w-[100vw] box-border">
+    <div className="h-[85vh] w-[100vw] box-border">
       <div className="mt-3 text-center">
       <h1 className="text-3xl mb-5 font-semibold">Pipleline Builder</h1>
         <button
