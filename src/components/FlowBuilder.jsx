@@ -5,7 +5,7 @@ import ReactFlow, {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  MiniMap 
+  MiniMap, 
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { SourceNode, DestinationNode } from './CustomNode';
